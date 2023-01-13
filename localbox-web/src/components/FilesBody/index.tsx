@@ -3,6 +3,8 @@ import { HiUpload } from "react-icons/hi";
 import { GrAdd } from "react-icons/gr";
 
 import * as S from './styles'
+import Button from "../Button";
+import { AiFillFolder } from "react-icons/ai";
 
 const FilesBody = () => {
   const tests = [1, 2, 3, 4, 4, 5, 6, 7, 1, 1, 1,
@@ -11,14 +13,14 @@ const FilesBody = () => {
   return (
     <S.ContainerFoles>
       <S.Options>
-        <S.Button>
+        <Button>
           <HiUpload />
-          Enviar arquivo
-        </S.Button>
-        <S.Button secondary>
+          <p>Enviar arquivo</p>
+        </Button>
+        <Button secondary>
           <GrAdd />
-          Criar Pasta
-        </S.Button>
+          <p>Criar Pasta</p>
+        </Button>
       </S.Options>
       <table>
         <thead>
@@ -33,7 +35,12 @@ const FilesBody = () => {
           {tests.map((i, index) => (
             <tr key={index}>
               <td></td>
-              <td>cnh-frente.pdf</td>
+              <td>
+                <S.ContainerFileName>
+                  <AiFillFolder size={32} />
+                  cnh-frente.pdf
+                </S.ContainerFileName>
+              </td>
               <td>eu</td>
               <td>12/09/1995 12:33</td>
             </tr>

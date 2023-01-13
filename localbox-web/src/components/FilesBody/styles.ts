@@ -25,6 +25,16 @@ export const ContainerFoles = styled.div`
   }
 `
 
+export const ContainerFileName = styled.div`
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 8px;
+    color: #A1C9F7;
+  }
+`
+
 export const Options = styled.div`
   display: flex;
   align-items: center;
@@ -32,25 +42,5 @@ export const Options = styled.div`
 
   button + button {
     margin-left: 16px;
-  }
-`
-
-type ButtonProp = {
-  secondary?: boolean
-}
-
-export const Button = styled.button<ButtonProp>`
-  height: 40px;
-  border: 0;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  background-color: #0061fe;
-  color: white;
-  ${({ secondary }) => !!secondary && `background-color: #f7f5f2;`}
-  ${({ secondary }) => !!secondary && `color: #1e1919;`}
-
-  svg {
-    margin-right: 8px;
   }
 `
