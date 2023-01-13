@@ -7,7 +7,7 @@ type ButtonProp = {
 export const Button = styled.button<ButtonProp>`
   height: 40px;
   border: 0;
-  padding: 8px;
+  padding: 16px;
   display: flex;
   align-items: center;
   background-color: #0061fe;
