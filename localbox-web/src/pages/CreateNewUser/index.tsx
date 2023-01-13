@@ -5,34 +5,31 @@ import Header from "../../components/Header";
 
 import * as S from './styles'
 
-const Login = () => {
+const CreateNewUser = () => {
   const navigate = useNavigate()
 
-  function handleNewUser() {
-    navigate('/new')
-  }
-
-  function handleGoHome(event: any) {
-    event.preventDefault()
-    navigate('/home')
+  function handleGoBack() {
+    navigate('/')
   }
 
   return (
     <>
       <Header hiddenUserArea />
       <S.Body>
-        <S.Form onSubmit={handleGoHome}>
+        <S.Form>
           <S.ContainerTitle>
-            <h1>Acessar</h1>
-            <S.CreateAccountText onClick={handleNewUser}>ou crie uma conta</S.CreateAccountText>
+            <h1>Novo usuário</h1>
           </S.ContainerTitle>
+          <label htmlFor="">Nome</label>
+          <input type="email" />
           <label htmlFor="">E-mail</label>
           <input type="email" />
           <label htmlFor="">Senha</label>
           <input type="password" />
           <S.ContainerBtn>
+            <p onClick={handleGoBack}>voltar</p>
             <Button>
-              <p>Acessar</p>
+              <p>Criar</p>
             </Button>
           </S.ContainerBtn>
         </S.Form>
@@ -41,4 +38,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default CreateNewUser
