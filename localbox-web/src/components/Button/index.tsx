@@ -4,7 +4,7 @@ import * as S from './styles'
 
 type ButtonProp = {
   secondary?: boolean
-  children: React.ReactElement | React.ReactElement[];
+  children?: React.ReactElement | React.ReactElement[];
 }
 
 const Button = ({ secondary, children }: ButtonProp) => {

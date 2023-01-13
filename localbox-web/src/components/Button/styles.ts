@@ -12,6 +12,7 @@ export const Button = styled.button<ButtonProp>`
   align-items: center;
   background-color: #0061fe;
   color: white;
+  font-weight: 500;
   ${({ secondary }) => !!secondary && `background-color: #f7f5f2;`}
   ${({ secondary }) => !!secondary && `color: #1e1919;`}
 

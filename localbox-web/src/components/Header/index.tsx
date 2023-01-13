@@ -4,19 +4,25 @@ import { AiOutlineUser } from 'react-icons/ai'
 
 import * as S from './styles'
 
-const Header = () => {
+type HeaderProp = {
+  hiddenUserArea?: boolean
+}
+
+const Header = ({ hiddenUserArea = false }: HeaderProp) => {
   return (
     <S.Nav>
       <S.ContainerLogo>
         <FaDropbox size={28} color={'#0061fe'} />
         <S.LogoName>Localbox</S.LogoName>
       </S.ContainerLogo>
-      <S.ContainerUser>
-        <S.Username>Luiz Paulo</S.Username>
-        <S.UserCircle>
-          <AiOutlineUser />
-        </S.UserCircle>
-      </S.ContainerUser>
+      {!hiddenUserArea && (
+        <S.ContainerUser>
+          <S.Username>Luiz Paulo</S.Username>
+          <S.UserCircle>
+            <AiOutlineUser />
+          </S.UserCircle>
+        </S.ContainerUser>
+      )}
     </S.Nav>
   )
 }
