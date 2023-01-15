@@ -17,7 +17,6 @@ export class UserController {
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     const user = await this.userService.findBy({ email: createUserDto.email });
-    console.log(user);
     if (user) {
       throw new HttpException('E-mail já existente', HttpStatus.FORBIDDEN);
     }
