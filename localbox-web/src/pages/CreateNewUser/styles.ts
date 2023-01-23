@@ -18,17 +18,6 @@ export const Form = styled.form`
     font-size: 12px;
     color: rgba(82,74,62,.82);
   }
-
-  input {
-    margin-bottom: 16px;
-    height: 48px;
-    width: 100%;
-    font-size: 16px;
-    padding: 8px;
-    border: 1px solid #958c7e;
-    border-radius: 0;
-    color: rgba(82,74,62,.82);
-  }
 `
 
 export const ContainerTitle = styled.div`
