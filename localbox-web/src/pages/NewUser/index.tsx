@@ -9,7 +9,7 @@ import { CreateUser } from "../../dtos/CreateUser";
 
 import * as S from './styles'
 
-const CreateNewUser = () => {
+const NewUser = () => {
   const navigate = useNavigate()
   const toast = useToast()
   const [name, setName] = useState('')
@@ -107,4 +107,4 @@ const CreateNewUser = () => {
   )
 }
 
-export default CreateNewUser
+export default NewUser
