@@ -14,6 +14,7 @@ const Login = () => {
 
   function handleGoHome(event: any) {
     event.preventDefault()
+    localStorage.setItem('@isSignedIn', 'true')
     navigate('/home')
   }
 
