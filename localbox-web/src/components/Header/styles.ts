@@ -38,6 +38,41 @@ export const ContainerUser = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  position: relative;
+  display: inline-block;
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    z-index: 1;
+    border-radius: 6px;
+    border: 1px solid hsla(36, 23%, 55%, .2);
+    width: 120px;
+    right: 2px;
+
+    ul {
+      list-style-type: none;
+    }
+    
+    li {
+      padding: 8px;
+    }
+
+    li:hover {
+      padding: 8px;
+      background-color: #f7f5f2;
+    }
+  }
+
+  &:hover .dropdown-content {
+    display: block;
+  }
+`
+
+export const ContainerUsername = styled.div`
+  display: flex;
+  align-items: center;
 `
 
 export const Username = styled.p`
