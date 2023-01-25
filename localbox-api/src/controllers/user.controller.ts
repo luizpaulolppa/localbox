@@ -1,15 +1,18 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
   Post,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UserService } from 'src/services/user.service';
-import { CreateUserDto } from 'src/dtos/create_user.dto';
+import { CreateUserDto } from 'src/dtos/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { JwtAuthGuard } from 'src/configs/jwt-auth.guard';
 
 @Controller('/api/users')
 export class UserController {
@@ -23,7 +26,7 @@ export class UserController {
     }
 
     const saltOrRounds = 10;
-    const password = 'random_password';
+    const password = createUserDto.password;
     const hash = await bcrypt.hash(password, saltOrRounds);
 
     this.userService.createUser({
@@ -33,5 +36,12 @@ export class UserController {
     });
 
     res.status(HttpStatus.CREATED).send();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  async listUsers() {
+    const users = await this.userService.listAll();
+    return users;
   }
 }

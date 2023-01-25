@@ -36,4 +36,8 @@ export class UserService {
       where,
     });
   }
+
+  async listAll(): Promise<User[]> {
+    return this.prisma.user.findMany();
+  }
 }
