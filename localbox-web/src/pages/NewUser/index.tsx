@@ -83,14 +83,14 @@ const NewUser = () => {
             value={name}
             maxLength={50}
             errorMessage="" />
-          <label htmlFor="email">E-mail</label>
+          <label htmlFor="email">Email</label>
           <Input
             name="email"
             type="email"
             onChange={setEmail}
             value={email}
             maxLength={50} />
-          <label htmlFor="password">Senha</label>
+          <label htmlFor="password">Password</label>
           <Input
             name="password"
             type="password"
