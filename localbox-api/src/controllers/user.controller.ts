@@ -13,6 +13,7 @@ import { UserService } from 'src/services/user.service';
 import { CreateUserDto } from 'src/dtos/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtAuthGuard } from 'src/configs/jwt-auth.guard';
+import { bcryptConstants } from 'src/configs/constants';
 
 @Controller('/api/users')
 export class UserController {
@@ -25,14 +26,15 @@ export class UserController {
       throw new HttpException('Email already exists', HttpStatus.FORBIDDEN);
     }
 
-    const saltOrRounds = 10;
-    const password = createUserDto.password;
-    const hash = await bcrypt.hash(password, saltOrRounds);
+    const passwordHash = await bcrypt.hash(
+      createUserDto.password,
+      bcryptConstants.salts,
+    );
 
     this.userService.createUser({
       name: createUserDto.name,
       email: createUserDto.email,
-      password: hash,
+      password: passwordHash,
     });
 
     res.status(HttpStatus.CREATED).send();
