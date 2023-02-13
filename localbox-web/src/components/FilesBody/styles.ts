@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ContainerFoles = styled.div`
+export const ContainerFiles = styled.div`
   overflow-y: auto;
   padding: 16px;
   width: 100%;
@@ -23,6 +23,16 @@ export const ContainerFoles = styled.div`
     cursor: pointer;
     background-color: #f7f5f2;
   }
+`
+
+export const EmptyContainer = styled.div`
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  margin-top: 40px;
+  color: rgba(82,74,62,.82);
 `
 
 export const ContainerFileName = styled.div`

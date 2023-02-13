@@ -3,6 +3,7 @@ import { AiOutlineUser } from 'react-icons/ai'
 
 import * as S from './styles'
 import { useNavigate } from "react-router-dom";
+import { limitCaracteres } from '../../utils';
 
 type HeaderProp = {
   hiddenUserArea?: boolean
@@ -10,6 +11,7 @@ type HeaderProp = {
 
 const Header = ({ hiddenUserArea = false }: HeaderProp) => {
   const navigate = useNavigate()
+  const name = localStorage.getItem('@name')
 
   function handleLogout() {
     localStorage.clear()
@@ -25,7 +27,7 @@ const Header = ({ hiddenUserArea = false }: HeaderProp) => {
       {!hiddenUserArea && (
         <S.ContainerUser>
           <S.ContainerUsername>
-            <S.Username>Luiz Paulo</S.Username>
+            <S.Username>{limitCaracteres(name, 20, true)}</S.Username>
             <S.UserCircle>
               <AiOutlineUser />
             </S.UserCircle>

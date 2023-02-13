@@ -31,12 +31,7 @@ export const ModalBoxForm = styled.div`
 
   label {
     font-weight: 500;
-  }
-
-  input {
-    height: 36px;
-    padding: 8px;
-    border: 2px solid black;
+    margin-bottom: 8px;
   }
 `
 

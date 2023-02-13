@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { HiUpload } from "react-icons/hi";
 import { GrAdd } from "react-icons/gr";
 
@@ -6,22 +6,45 @@ import * as S from './styles'
 import Button from "../Button";
 import { AiFillFolder } from "react-icons/ai";
 import AddFolderModal from "../AddFolderModal";
+import { CreateFile } from "../../dtos/CreateFile";
+import { listFiles } from "../../service/api";
 
 const FilesBody = () => {
-  const tests = [1, 2, 3, 4, 4, 5, 6, 7, 1, 1, 1,
-    1, 2, 3, 4, 4, 5, 6, 7, 1, 1, 1,
-    1, 2, 3, 4, 4, 5, 6, 7, 1, 1, 1]
+  const [openNewFolder, setOpenNewFolder] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [files, setFiles] = useState<CreateFile[]>([])
+
+  useEffect(() => {
+    loadingFiles()
+  }, [])
+
+  async function loadingFiles() {
+    setIsLoading(true)
+    const response = await listFiles()
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    setIsLoading(false)
+    setFiles(response.data)
+  }
+
+  function handleOnCloseModal(reloadFiles?: boolean) {
+    setOpenNewFolder(false)
+    if (reloadFiles) {
+      setFiles([])
+      loadingFiles()
+    }
+  }
+  
   return (
     <>
-      <S.ContainerFoles>
+      <S.ContainerFiles>
         <S.Options>
           <Button>
             <HiUpload />
-            <p>Enviar arquivo</p>
+            Enviar arquivo
           </Button>
-          <Button secondary>
+          <Button secondary onClick={() => setOpenNewFolder(true)}>
             <GrAdd />
-            <p>Criar Pasta</p>
+            Criar pasta
           </Button>
         </S.Options>
         <table>
@@ -34,23 +57,28 @@ const FilesBody = () => {
             </tr>
           </thead>
           <tbody>
-            {tests.map((i, index) => (
+            {files.map((file, index) => (
               <tr key={index}>
                 <td></td>
                 <td>
                   <S.ContainerFileName>
                     <AiFillFolder size={32} />
-                    cnh-frente.pdf
+                    {file.name}
                   </S.ContainerFileName>
                 </td>
-                <td>eu</td>
-                <td>12/09/1995 12:33</td>
+                <td>Me</td>
+                <td>? 2023-02-12 03:33pm</td>
               </tr>
             ))}
           </tbody>
         </table>
-      </S.ContainerFoles>
-      {/* <AddFolderModal /> */}
+        {!isLoading && !files.length && <S.EmptyContainer>Esta pasta está vazia, arraste ou solta para fazer o envio.</S.EmptyContainer>}
+        {isLoading && <S.EmptyContainer>Loading files...</S.EmptyContainer>}
+      </S.ContainerFiles>
+      <AddFolderModal
+        isOpen={openNewFolder}
+        onClose={handleOnCloseModal}
+      />
     </>
   )
 }

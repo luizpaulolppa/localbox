@@ -50,6 +50,8 @@ const Login = () => {
       localStorage.setItem('@isSignedIn', 'true')
       localStorage.setItem('@accessToken', response.data.accessToken)
       localStorage.setItem('@accessType', response.data.accessType)
+      localStorage.setItem('@name', response.data.name)
+      localStorage.setItem('@email', response.data.email)
       navigate('/home')
     } catch (error) {
       showError('Email or Password is invalid')

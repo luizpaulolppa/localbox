@@ -25,7 +25,12 @@ export class AuthController {
     }
 
     const accessToken = await this.authService.login(user.id, user.email);
+    const response = {
+      ...accessToken,
+      name: user.name,
+      email: user.email,
+    };
 
-    res.status(HttpStatus.OK).send(accessToken);
+    res.status(HttpStatus.OK).send(response);
   }
 }
