@@ -24,10 +24,10 @@ model User {
 model File {
   id           Int      @id @default(autoincrement())
   name         String
-  type         String
+  type         String?
+  isFolder     Boolean?
   userId       Int
   parentFileId Int?     @unique
-  isFolder     Boolean?
 
   user       User  @relation(fields: [userId], references: [id])
   parentFile File? @relation("ParentFile", fields: [parentFileId], references: [id])

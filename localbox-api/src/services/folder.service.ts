@@ -17,10 +17,8 @@ export class FolderService {
     userId: number,
     parentFileId?: number,
   ): Promise<File> {
-    console.log(parentFileId);
-    const type = TypeOfFile.FOLDER.toString();
     return this.prisma.file.create({
-      data: { name, type, userId, parentFileId },
+      data: { name, userId, parentFileId, isFolder: true },
     });
   }
 

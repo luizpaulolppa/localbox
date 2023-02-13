@@ -12,10 +12,10 @@ CREATE TABLE "users" (
 CREATE TABLE "files" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "type" TEXT NOT NULL,
+    "type" TEXT,
+    "isFolder" BOOLEAN,
     "userId" INTEGER NOT NULL,
     "parentFileId" INTEGER,
-    "isFolder" BOOLEAN,
 
     CONSTRAINT "files_pkey" PRIMARY KEY ("id")
 );
