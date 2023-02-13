@@ -15,4 +15,23 @@ model User {
   name     String
   email    String @unique
   password String
+
+  files File[]
+
+  @@map("users")
+}
+
+model File {
+  id           Int      @id @default(autoincrement())
+  name         String
+  type         String
+  userId       Int
+  parentFileId Int?     @unique
+  isFolder     Boolean?
+
+  user       User  @relation(fields: [userId], references: [id])
+  parentFile File? @relation("ParentFile", fields: [parentFileId], references: [id])
+  file       File? @relation("ParentFile")
+
+  @@map("files")
 }

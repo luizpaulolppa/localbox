@@ -7,6 +7,8 @@ import { AuthService } from './services/auth.service';
 import { JwtStrategy } from './configs/jwt.strategy';
 import { PrismaService } from './services/prisma.service';
 import { UserService } from './services/user.service';
+import { FolderService } from './services/folder.service';
+import { FileController } from './controllers/file.controller';
 
 @Module({
   imports: [
@@ -15,7 +17,13 @@ import { UserService } from './services/user.service';
       signOptions: { expiresIn: jwtConstants.expiresIn },
     }),
   ],
-  controllers: [UserController, AuthController],
-  providers: [PrismaService, UserService, AuthService, JwtStrategy],
+  controllers: [UserController, AuthController, FileController],
+  providers: [
+    PrismaService,
+    UserService,
+    AuthService,
+    FolderService,
+    JwtStrategy,
+  ],
 })
 export class AppModule {}
