@@ -5,12 +5,15 @@ import { GrAdd } from "react-icons/gr";
 import * as S from './styles'
 import Button from "../Button";
 import { AiFillFolder } from "react-icons/ai";
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import AddFolderModal from "../AddFolderModal";
 import { CreateFile } from "../../dtos/CreateFile";
 import { listFiles } from "../../service/api";
+import OptionsFileModal, { OptionFileModalType } from "../OptionsFileModal";
 
 const FilesBody = () => {
   const [openNewFolder, setOpenNewFolder] = useState(false)
+  const [openFileOptions, setOpenFileOptions] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [files, setFiles] = useState<CreateFile[]>([])
 
@@ -33,6 +36,12 @@ const FilesBody = () => {
       loadingFiles()
     }
   }
+
+  function handleCloseFileOptions(option: OptionFileModalType) {
+    if (option === 'cancel') {
+      setOpenFileOptions(false)
+    }
+  }
   
   return (
     <>
@@ -40,11 +49,11 @@ const FilesBody = () => {
         <S.Options>
           <Button>
             <HiUpload />
-            Enviar arquivo
+            Upload file
           </Button>
           <Button secondary onClick={() => setOpenNewFolder(true)}>
             <GrAdd />
-            Criar pasta
+            New folder
           </Button>
         </S.Options>
         <table>
@@ -54,6 +63,7 @@ const FilesBody = () => {
               <th>Nome</th>
               <th>Proprietário</th>
               <th>Modificado</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -68,16 +78,25 @@ const FilesBody = () => {
                 </td>
                 <td>Me</td>
                 <td>? 2023-02-12 03:33pm</td>
+                <td>
+                  <S.BoxDotsHorizontal onClick={() => setOpenFileOptions(true)}>
+                    <HiOutlineDotsHorizontal size={22} />
+                  </S.BoxDotsHorizontal>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-        {!isLoading && !files.length && <S.EmptyContainer>Esta pasta está vazia, arraste ou solta para fazer o envio.</S.EmptyContainer>}
+        {!isLoading && !files.length && <S.EmptyContainer>This folder is empty.</S.EmptyContainer>}
         {isLoading && <S.EmptyContainer>Loading files...</S.EmptyContainer>}
       </S.ContainerFiles>
       <AddFolderModal
         isOpen={openNewFolder}
         onClose={handleOnCloseModal}
+      />
+      <OptionsFileModal
+        isOpen={openFileOptions}
+        onClose={handleCloseFileOptions}
       />
     </>
   )

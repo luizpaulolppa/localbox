@@ -54,3 +54,15 @@ export const Options = styled.div`
     margin-left: 16px;
   }
 `
+
+export const BoxDotsHorizontal = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  width: 32px;
+
+  &:hover {
+    background-color: #9b64001a;
+  }
+`
