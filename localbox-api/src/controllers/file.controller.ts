@@ -1,3 +1,6 @@
+import * as fs from 'fs';
+import * as path from 'path';
+import { randomUUID } from 'crypto';
 import {
   Body,
   Controller,
@@ -5,10 +8,14 @@ import {
   Headers,
   HttpException,
   HttpStatus,
+  ParseFilePipe,
   Post,
   Query,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from 'src/configs/jwt-auth.guard';
 import { CreateFileDto } from 'src/dtos/create-file.dto';
 import { AuthService } from 'src/services/auth.service';
@@ -62,5 +69,21 @@ export class FileController {
     const userId = currentUser.id;
     const parentId = query.parentId ? Number(query.parentId) : null;
     return await this.folderService.findByParentId(userId, parentId);
+  }
+
+  @Post('/upload')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FileInterceptor('file'))
+  async upload(
+    @Headers('Authorization') authorization,
+    @UploadedFile(new ParseFilePipe({ validators: [] }))
+    file: Express.Multer.File,
+  ) {
+    console.log(file);
+    const { originalname, mimetype } = file;
+    const keyFile = randomUUID();
+    const pathName = path.resolve(__dirname, '..', '..', 'files', keyFile);
+    await fs.writeFileSync(pathName, file.buffer);
+    return { ok: true };
   }
 }
