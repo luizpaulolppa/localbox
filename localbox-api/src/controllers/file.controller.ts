@@ -20,6 +20,7 @@ import { JwtAuthGuard } from 'src/configs/jwt-auth.guard';
 import { CreateFileDto } from 'src/dtos/create-file.dto';
 import { AuthService } from 'src/services/auth.service';
 import { FolderService } from 'src/services/folder.service';
+import { UploadFileDto } from 'src/dtos/create-user.dto copy';
 
 @Controller('/api/files')
 export class FileController {
@@ -78,12 +79,40 @@ export class FileController {
     @Headers('Authorization') authorization,
     @UploadedFile(new ParseFilePipe({ validators: [] }))
     file: Express.Multer.File,
+    @Body() body: UploadFileDto,
   ) {
-    console.log(file);
-    const { originalname, mimetype } = file;
-    const keyFile = randomUUID();
-    const pathName = path.resolve(__dirname, '..', '..', 'files', keyFile);
+    const { originalname: originalName, mimetype } = file;
+    const parentFileId = body.parentId ? Number(body.parentId) : null;
+    const fileKey = randomUUID();
+    const currentUser = await this.authService.currentUser(authorization);
+    const userId = currentUser.id;
+
+    console.log('authorization', authorization);
+    console.log('file', file);
+    console.log('parentId', parentFileId);
+
+    const files = await this.folderService.findByNameAndParentId(
+      originalName,
+      userId,
+      parentFileId,
+    );
+
+    const hasFileWithTheSameName = !!files.find((f) =>
+      f.name.includes(originalName),
+    );
+    if (hasFileWithTheSameName) {
+      throw new HttpException('File already exists', HttpStatus.FORBIDDEN);
+    }
+
+    const pathName = path.resolve(__dirname, '..', '..', 'files', fileKey);
     await fs.writeFileSync(pathName, file.buffer);
-    return { ok: true };
+
+    return await this.folderService.createNewFile(
+      originalName,
+      mimetype,
+      userId,
+      fileKey,
+      parentFileId,
+    );
   }
 }

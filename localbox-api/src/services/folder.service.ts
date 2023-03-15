@@ -22,6 +22,25 @@ export class FolderService {
     });
   }
 
+  async createNewFile(
+    originalName: string,
+    mimeType: string,
+    userId: number,
+    fileKey: string,
+    parentFileId?: number,
+  ): Promise<File> {
+    return this.prisma.file.create({
+      data: {
+        name: originalName,
+        userId,
+        parentFileId,
+        isFolder: false,
+        type: mimeType,
+        fileKey,
+      },
+    });
+  }
+
   async findBy(
     userWhereUniqueInput: Prisma.FileWhereUniqueInput,
   ): Promise<File | null> {

@@ -6,6 +6,7 @@ import * as S from './styles'
 import Button from "../Button";
 import { AiFillFolder } from "react-icons/ai";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { BsFillFileEarmarkFill } from "react-icons/bs";
 import AddFolderModal from "../AddFolderModal";
 import { CreateFile } from "../../dtos/CreateFile";
 import { listFiles } from "../../service/api";
@@ -72,7 +73,8 @@ const FilesBody = () => {
                 <td></td>
                 <td>
                   <S.ContainerFileName>
-                    <AiFillFolder size={32} />
+                    {file.isFolder && <AiFillFolder size={28} />}
+                    {!file.isFolder && <BsFillFileEarmarkFill size={26} />}
                     {file.name}
                   </S.ContainerFileName>
                 </td>
